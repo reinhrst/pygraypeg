@@ -101,7 +101,7 @@ def _block_iterator(image):
     x = y = 0
     while y != height:
         assert y < height
-        yield image[x:x+8, y:y+8]
+        yield image[y:y+8, x:x+8]
         x += 8
         if x == width:
             x = 0
