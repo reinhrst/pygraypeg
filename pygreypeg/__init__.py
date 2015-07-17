@@ -149,7 +149,11 @@ def _block_quant(dct, dqt):
 
 def _block_zz(quant):
     zz = [int(quant[zz_index]) for zz_index in constants.zz]
-    length = len([x for x in zz if x])
+    length = 64
+    while length > 0:
+        if zz[length - 1]:
+            break
+        length -= 1
     return zz, length
 
 
