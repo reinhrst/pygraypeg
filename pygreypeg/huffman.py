@@ -77,5 +77,6 @@ class Huffman(object):
             self.write_bits(constants.ac_code[0x00], constants.ac_len[0x00])
 
     def end_and_get_buffer(self):
-        # todo: what to do with bits that haven't made it to _buf yet?
+        # flush any remaining junk
+        self.write_bits(0x7F, 7)
         return self._buf
