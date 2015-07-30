@@ -2,6 +2,7 @@ from pygreypeg import encode
 
 
 if __name__ == "__main__":
+    import cProfile
     import numpy
     import sys
     print("Running test mode, generating image and writing it to a file")
@@ -14,7 +15,7 @@ if __name__ == "__main__":
     for x in range(128):
         for y in range(256):
             image[y, x] = 255 * (y % 2)
-    jpegdata = encode(image, 93)
+    cProfile.run('jpegdata = encode(image, 93)')
     with open(filename, "wb") as f:
         f.write(jpegdata)
     print("test jpeg written to %s" % filename)
