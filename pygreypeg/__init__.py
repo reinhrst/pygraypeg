@@ -1,6 +1,7 @@
 from . import constants
 from .huffman import Huffman
 import struct
+import numpy
 
 
 def _dct_matrix_for_quality(quality):
@@ -109,11 +110,16 @@ def _block_iterator(image):
         else:
             assert x < width
 
+_block_dct_zeros = None
+
 
 def _block_dct(block):
     """
     calculates and returns the block dct
     """
+    if not block.any() and _block_dct_zeros is not None:
+        # attempt to speed up largly blank images
+        return _block_dct_zeros
     coeff = constants.dct
     tmp = [None] * 64
     for y, row in enumerate(block):
@@ -143,6 +149,7 @@ def _block_dct(block):
         dct[48+x] = coeff[5]*(s[0]-s[3])+coeff[1]*(s[2]-s[1])
         dct[56+x] = coeff[6]*d[0]-coeff[4]*d[1]+coeff[2]*d[2]-coeff[0]*d[3]
     return dct
+_block_dct_zeros = _block_dct(numpy.zeros((8, 8)))
 
 
 def _block_quant(dct, dqt):
