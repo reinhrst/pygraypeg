@@ -28,7 +28,7 @@ def _get_header(image, dqt):
     def writeshort(val):
         buf.extend(struct.pack(">H", val))
 
-    width, height = image.shape
+    height, width = image.shape
     # SOI
     writeshort(0xFFD8)  # SOI marker
 
@@ -97,7 +97,7 @@ def _get_header(image, dqt):
 
 
 def _block_iterator(image):
-    width, height = image.shape
+    height, width = image.shape
     x = y = 0
     while y != height:
         assert y < height
@@ -158,7 +158,7 @@ def _block_zz(quant):
 
 
 def encode(image, quality):
-    width, height = image.shape
+    height, width = image.shape
     assert width % 8 == 0, "width should be multiple of 8"
     assert height % 8 == 0, "height should be multiple of 8"
 
