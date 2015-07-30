@@ -106,6 +106,8 @@ def _block_iterator(image):
         if x == width:
             x = 0
             y += 8
+        else:
+            assert x < width
 
 
 def _block_dct(block):
